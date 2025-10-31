@@ -3,6 +3,7 @@ package pl.jmalinkiewicz.logistics_planning_app.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.jmalinkiewicz.logistics_planning_app.dto.LocationDTO;
 import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.service.LocationService;
 
@@ -22,8 +23,8 @@ public class LocationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Location>> getAllLocations() {
-        List<Location> locations = locationService.getAllLocations();
+    public ResponseEntity<List<LocationDTO>> getAllLocations() {
+        List<LocationDTO> locations = locationService.getAllLocationsDto();
         return ResponseEntity.ok(locations);
     }
 }

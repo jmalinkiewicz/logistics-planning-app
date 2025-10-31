@@ -3,6 +3,8 @@ package pl.jmalinkiewicz.logistics_planning_app.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.jmalinkiewicz.logistics_planning_app.dto.TransitDTO;
+import pl.jmalinkiewicz.logistics_planning_app.mapper.TransitMapper;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
 import pl.jmalinkiewicz.logistics_planning_app.model.ParcelStatus;
 import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
@@ -21,6 +23,14 @@ public class TransitService {
     private final ParcelRepository parcelRepository;
     private final ParcelService parcelService;
     private final SimulationService simulationService;
+    private final TransitMapper transitMapper;
+
+    public List<TransitDTO> getAllTransitsDto() {
+        return transitRepository.findAll()
+                .stream()
+                .map(transitMapper::toDto)
+                .toList();
+    }
 
     public List<Transit> getAllTransits() {
         return transitRepository.findAll();
