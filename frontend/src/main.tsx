@@ -5,8 +5,8 @@ import App from "./App.tsx";
 import { DataProvider } from "./providers/data-provider.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import TransitsLayout from "./components/data-manager/transits/transits-layout.tsx";
-import TransitsList from "./components/data-manager/transits/transits-list.tsx";
 import Transits from "./components/data-manager/transits/transits.tsx";
+import Transit from "./components/data-manager/transits/transit.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
           { index: true, element: <Transits /> },
           {
             path: ":id",
-            element: <div>Transit Details</div>,
+            element: <Transit />,
           },
         ],
       },

@@ -5,12 +5,24 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(dateStr: string) {
+export function formatDate(dateStr: string, includeTime = false) {
   const date = new Date(dateStr);
 
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const year = date.getFullYear();
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    ...(includeTime && { hour: "numeric", minute: "2-digit", hour12: true }),
+  };
 
-  return `${month}-${day}-${year}`;
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+}
+
+export function getDefaultTab(path: string) {
+  if (path.startsWith("/transits")) return "transits";
+  if (path.startsWith("/parcels")) return "parcels";
+  if (path.startsWith("/about")) return "about";
+  if (path.startsWith("/locations")) return "locations";
+
+  return "about";
 }

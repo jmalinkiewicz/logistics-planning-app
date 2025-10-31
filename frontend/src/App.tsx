@@ -1,11 +1,13 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import "./App.css";
 import { useData } from "./providers/data-provider";
-import { Button } from "./components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
+import { getDefaultTab } from "./lib/utils";
 
 function App() {
-  const data = useData();
+  // const data = useData();
+  const location = useLocation();
+  console.log(getDefaultTab(location.pathname));
 
   return (
     <>
@@ -13,8 +15,8 @@ function App() {
         {/* DATA MANAGER WINDOW */}
 
         <div className="w-1/2 p-16 border-r-2">
-          <Tabs>
-            <TabsList defaultValue={"about"}>
+          <Tabs className="mb-6" value={getDefaultTab(location.pathname)}>
+            <TabsList>
               <Link to="/">
                 <TabsTrigger value="about">About</TabsTrigger>
               </Link>

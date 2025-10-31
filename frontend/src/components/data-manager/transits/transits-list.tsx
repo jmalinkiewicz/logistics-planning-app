@@ -9,8 +9,11 @@ import {
 } from "@/components/ui/table";
 import type { Transit } from "@/definitions";
 import { formatDate } from "@/lib/utils";
+import { useNavigate } from "react-router";
 
 export default function TransitsList({ transits }: { transits: Transit[] }) {
+  const navigate = useNavigate();
+
   return (
     <Table>
       <TableCaption>A list of all tranits.</TableCaption>
@@ -28,7 +31,10 @@ export default function TransitsList({ transits }: { transits: Transit[] }) {
       </TableHeader>
       <TableBody>
         {transits.map((transit) => (
-          <TableRow key={transit.id}>
+          <TableRow
+            onClick={() => navigate(`/transits/${transit.id}`)}
+            key={transit.id}
+          >
             <TableCell className="font-medium">{transit.id}</TableCell>
             <TableCell>{transit.status}</TableCell>
             <TableCell>{transit.startLocation.city}</TableCell>
