@@ -1,3 +1,4 @@
+import { Outlet } from "react-router";
 import "./App.css";
 import { useData } from "./providers/data-provider";
 
@@ -6,14 +7,17 @@ function App() {
 
   return (
     <>
-      <pre
-        style={{
-          textAlign: "left",
-          backgroundColor: "black",
-        }}
-      >
-        {JSON.stringify(data, null, 2)}
-      </pre>
+      <div className="flex w-full">
+        {/* DATA MANAGER WINDOW */}
+
+        <div className="w-1/2">
+          <Outlet />
+        </div>
+
+        {/* THREE.JS VISUALIZATION WINDOW */}
+
+        <div className="w-1/2"></div>
+      </div>
     </>
   );
 }
