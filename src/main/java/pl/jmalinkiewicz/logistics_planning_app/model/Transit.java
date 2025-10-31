@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -67,6 +69,9 @@ public class Transit {
     @NonNull
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "transit")
+    private List<Parcel> parcels = new ArrayList<>();
 
     public Transit() {}
 

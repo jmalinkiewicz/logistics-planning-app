@@ -5,13 +5,15 @@ import com.github.skjolber.packing.packer.plain.PlainPackager;
 import org.springframework.stereotype.Service;
 import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelDTO;
 import pl.jmalinkiewicz.logistics_planning_app.dto.TransitDTO;
+import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
+import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class SimulationService {
-    public final boolean checkIfParcelFits(ParcelDTO parcel, List<ParcelDTO> assignedParcels, TransitDTO transit) {
+    public final boolean checkIfParcelFits(Parcel parcel, List<Parcel> assignedParcels, Transit transit) {
         List<BoxItem> products = new ArrayList<>();
 
         products.add(
@@ -26,7 +28,7 @@ public class SimulationService {
                 )
         );
 
-        for (ParcelDTO assignedParcel : assignedParcels) {
+        for (Parcel assignedParcel : assignedParcels) {
             products.add(
                     new BoxItem(Box.newBuilder()
                             .withSize(

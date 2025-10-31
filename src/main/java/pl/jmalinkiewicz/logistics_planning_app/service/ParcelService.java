@@ -6,6 +6,7 @@ import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelDTO;
 import pl.jmalinkiewicz.logistics_planning_app.mapper.ParcelMapper;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
 import pl.jmalinkiewicz.logistics_planning_app.model.ParcelStatus;
+import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
 import pl.jmalinkiewicz.logistics_planning_app.repository.ParcelRepository;
 
 import java.util.List;
@@ -16,14 +17,16 @@ public class ParcelService {
 
     private final ParcelRepository parcelRepository;
     private final ParcelMapper parcelMapper;
+    private final TransitService transitService;
+    private final SimulationService simulationService;
 
-    public List<Parcel> findUnassignedParcelsForRoute(final Integer start, final Integer end) {
+    public List<Parcel> findUnassignedParcelsForRoute(final int start, final int end) {
         return parcelRepository.findByStatusAndStartLocationAndEndLocationOrderByCreatedAtAsc(
                 ParcelStatus.unassigned, start, end
         );
     }
 
-    public List<ParcelDTO> findUnassignedParcelsForRouteDto(final Integer start, final Integer end) {
+    public List<ParcelDTO> findUnassignedParcelsForRouteDto(final int start, final int end) {
         return parcelRepository.findByStatusAndStartLocationAndEndLocationOrderByCreatedAtAsc(
                 ParcelStatus.unassigned, start, end
         )
@@ -46,4 +49,5 @@ public class ParcelService {
     public Parcel createParcel(final Parcel parcel) {
         return parcelRepository.save(parcel);
     }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelDTO;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
 import pl.jmalinkiewicz.logistics_planning_app.service.ParcelService;
+import pl.jmalinkiewicz.logistics_planning_app.service.ParcelTransitService;
 
 import java.util.List;
 
@@ -15,10 +16,11 @@ import java.util.List;
 public class ParcelController {
 
     private final ParcelService parcelService;
+    private final ParcelTransitService parcelTransitService;
 
     @PostMapping
     public ResponseEntity<Parcel> createParcel(@RequestBody Parcel parcel) {
-        Parcel saved = parcelService.createParcel(parcel);
+        Parcel saved = parcelTransitService.createAndAssignParcel(parcel);
         return ResponseEntity.ok(saved);
     }
 

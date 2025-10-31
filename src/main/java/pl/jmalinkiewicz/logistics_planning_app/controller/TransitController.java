@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.jmalinkiewicz.logistics_planning_app.dto.TransitDTO;
 import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
+import pl.jmalinkiewicz.logistics_planning_app.service.ParcelTransitService;
 import pl.jmalinkiewicz.logistics_planning_app.service.TransitService;
 
 import java.util.List;
@@ -15,10 +16,11 @@ import java.util.List;
 public class TransitController {
 
     private final TransitService transitService;
+    private final ParcelTransitService parcelTransitService;
 
     @PostMapping
     public ResponseEntity<Transit> createTransit(@RequestBody Transit transit) {
-        Transit saved = transitService.createTransitAndAssignParcels(transit);
+        Transit saved = parcelTransitService.createTransitAndAssignParcels(transit);
         return ResponseEntity.ok(saved);
     }
 
