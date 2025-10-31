@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App.tsx";
 import { DataProvider } from "./providers/data-provider.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
+import TransitsLayout from "./components/data-manager/transits/transits-layout.tsx";
+import TransitsList from "./components/data-manager/transits/transits-list.tsx";
+import Transits from "./components/data-manager/transits/transits.tsx";
 
 const router = createBrowserRouter([
   {
@@ -14,9 +17,9 @@ const router = createBrowserRouter([
       { index: true, element: <div>Project Welcome</div> },
       {
         path: "transits",
-        element: <div>Transits Layout</div>,
+        element: <TransitsLayout />,
         children: [
-          { index: true, element: <div>Transits List</div> },
+          { index: true, element: <Transits /> },
           {
             path: ":id",
             element: <div>Transit Details</div>,

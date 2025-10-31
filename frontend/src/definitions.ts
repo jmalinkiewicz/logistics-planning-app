@@ -10,7 +10,9 @@ export type Transit = {
   id: number;
   startLocation: Location;
   endLocation: Location;
-  weightKg: number;
+  currentLoadKg: number;
+  maxVolumeM3: number;
+  maxLoadKg: number;
   widthM: number;
   heightM: number;
   depthM: number;
@@ -18,7 +20,9 @@ export type Transit = {
   transit: string | null;
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
-  volumeM3: number;
+  departureDate: string;
+  arrivalDate: string;
+  currentVolumeM3: number;
 };
 
 export type Parcel = {
