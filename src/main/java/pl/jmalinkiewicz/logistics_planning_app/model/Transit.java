@@ -15,15 +15,17 @@ public class Transit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @NonNull
-    @Column(name = "start_location")
-    private Integer startLocation;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "start_location", referencedColumnName = "id")
+    private Location startLocation;
 
     @NonNull
-    @Column(name = "end_location")
-    private Integer endLocation;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "end_location", referencedColumnName = "id")
+    private Location endLocation;
 
     @NonNull
     @Column(name = "max_load_kg")

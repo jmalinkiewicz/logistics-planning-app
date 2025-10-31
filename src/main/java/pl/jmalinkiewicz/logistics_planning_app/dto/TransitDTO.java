@@ -3,6 +3,7 @@ package pl.jmalinkiewicz.logistics_planning_app.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.model.TransitStatus;
 
 import java.time.LocalDateTime;
@@ -13,8 +14,8 @@ import java.time.LocalDateTime;
 public class TransitDTO {
     private Long id;
 
-    private Integer startLocation;
-    private Integer endLocation;
+    private LocationDTO startLocation;
+    private LocationDTO endLocation;
 
     private Double maxLoadKg;
 

@@ -3,6 +3,7 @@ package pl.jmalinkiewicz.logistics_planning_app.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.model.ParcelStatus;
 
 import java.time.LocalDateTime;
@@ -14,8 +15,8 @@ public class ParcelDTO {
 
     private Long id;
 
-    private Integer startLocation;
-    private Integer endLocation;
+    private LocationDTO startLocation;
+    private LocationDTO endLocation;
 
     private Double weightKg;
 

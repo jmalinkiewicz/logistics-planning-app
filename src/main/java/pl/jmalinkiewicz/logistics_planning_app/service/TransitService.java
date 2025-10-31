@@ -5,14 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.jmalinkiewicz.logistics_planning_app.dto.TransitDTO;
 import pl.jmalinkiewicz.logistics_planning_app.mapper.TransitMapper;
-import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
-import pl.jmalinkiewicz.logistics_planning_app.model.ParcelStatus;
-import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
-import pl.jmalinkiewicz.logistics_planning_app.model.TransitStatus;
-import pl.jmalinkiewicz.logistics_planning_app.repository.ParcelRepository;
+import pl.jmalinkiewicz.logistics_planning_app.model.*;
 import pl.jmalinkiewicz.logistics_planning_app.repository.TransitRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +29,7 @@ public class TransitService {
         return transitRepository.findAll();
     }
 
-    public List<Transit> findTransitsForRoute(final int start, final int end) {
+    public List<Transit> findTransitsForRoute(final Location start, final Location end) {
         return transitRepository.findByStatusAndStartLocationAndEndLocationOrderByArrivalDateAsc(TransitStatus.scheduled, start, end);
     }
 }

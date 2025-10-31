@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelDTO;
 import pl.jmalinkiewicz.logistics_planning_app.mapper.ParcelMapper;
+import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
 import pl.jmalinkiewicz.logistics_planning_app.model.ParcelStatus;
-import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
 import pl.jmalinkiewicz.logistics_planning_app.repository.ParcelRepository;
 
 import java.util.List;
@@ -17,16 +17,14 @@ public class ParcelService {
 
     private final ParcelRepository parcelRepository;
     private final ParcelMapper parcelMapper;
-    private final TransitService transitService;
-    private final SimulationService simulationService;
 
-    public List<Parcel> findUnassignedParcelsForRoute(final int start, final int end) {
+    public List<Parcel> findUnassignedParcelsForRoute(final Location start, final Location end) {
         return parcelRepository.findByStatusAndStartLocationAndEndLocationOrderByCreatedAtAsc(
                 ParcelStatus.unassigned, start, end
         );
     }
 
-    public List<ParcelDTO> findUnassignedParcelsForRouteDto(final int start, final int end) {
+    public List<ParcelDTO> findUnassignedParcelsForRouteDto(final Location start, final Location end) {
         return parcelRepository.findByStatusAndStartLocationAndEndLocationOrderByCreatedAtAsc(
                 ParcelStatus.unassigned, start, end
         )

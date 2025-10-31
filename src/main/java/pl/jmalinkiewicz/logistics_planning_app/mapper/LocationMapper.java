@@ -6,7 +6,6 @@ import pl.jmalinkiewicz.logistics_planning_app.dto.LocationDTO;
 
 @Mapper(componentModel = "spring")
 public interface LocationMapper {
-
     LocationDTO toDto(Location entity);
     Location toEntity(LocationDTO dto);
 }
