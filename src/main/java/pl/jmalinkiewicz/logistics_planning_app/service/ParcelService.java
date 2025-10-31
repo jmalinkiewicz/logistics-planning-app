@@ -23,6 +23,15 @@ public class ParcelService {
         );
     }
 
+    public List<ParcelDTO> findUnassignedParcelsForRouteDto(final Integer start, final Integer end) {
+        return parcelRepository.findByStatusAndStartLocationAndEndLocationOrderByCreatedAtAsc(
+                ParcelStatus.unassigned, start, end
+        )
+                .stream()
+                .map(parcelMapper::toDto)
+                .toList();
+    }
+
     public List<Parcel> getAllParcels() {
         return parcelRepository.findAll();
     }

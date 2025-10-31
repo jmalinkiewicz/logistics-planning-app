@@ -3,7 +3,9 @@ package pl.jmalinkiewicz.logistics_planning_app.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelDTO;
 import pl.jmalinkiewicz.logistics_planning_app.dto.TransitDTO;
+import pl.jmalinkiewicz.logistics_planning_app.mapper.ParcelMapper;
 import pl.jmalinkiewicz.logistics_planning_app.mapper.TransitMapper;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
 import pl.jmalinkiewicz.logistics_planning_app.model.ParcelStatus;
@@ -24,6 +26,7 @@ public class TransitService {
     private final ParcelService parcelService;
     private final SimulationService simulationService;
     private final TransitMapper transitMapper;
+    private final ParcelMapper parcelMapper;
 
     public List<TransitDTO> getAllTransitsDto() {
         return transitRepository.findAll()
@@ -38,19 +41,23 @@ public class TransitService {
 
     public Transit createTransitAndAssignParcels(Transit newTransit) {
         final Transit savedTransit = transitRepository.save(newTransit);
+        final TransitDTO transitDto = transitMapper.toDto(savedTransit);
 
         List<Parcel> unassignedParcels = parcelService.findUnassignedParcelsForRoute(
                 savedTransit.getStartLocation(),
                 savedTransit.getEndLocation()
         );
 
-        List<Parcel> assignedParcels = new ArrayList<>();
+        List<ParcelDTO> assignedParcels = new ArrayList<>();
 
         for (Parcel parcel : unassignedParcels) {
-            if (simulationService.checkIfParcelFits(parcel, assignedParcels, newTransit)) {
+            ParcelDTO parcelDto = parcelMapper.toDto(parcel);
+
+            if (simulationService.checkIfParcelFits(parcelDto, assignedParcels, transitDto)) {
 
                 parcel.setTransit(savedTransit);
                 parcel.setStatus(ParcelStatus.scheduled);
+                assignedParcels.add(parcelDto);
                 parcelRepository.save(parcel);
 
 
