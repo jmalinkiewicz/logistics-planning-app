@@ -43,3 +43,34 @@ export type Parcel = {
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
 };
+
+export interface Box {
+  id: string;
+  width: number;
+  height: number;
+  depth: number;
+  x: number;
+  y: number;
+  z: number;
+  color?: string;
+}
+
+export interface BoxInput {
+  id: string;
+  width: number;
+  height: number;
+  depth: number;
+  color?: string;
+}
+
+export interface Container {
+  width: number;
+  length: number;
+  height: number;
+  minX: number;
+  maxX: number;
+  minY: number;
+  maxY: number;
+  minZ: number;
+  maxZ: number;
+}

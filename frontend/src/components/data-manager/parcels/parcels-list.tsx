@@ -25,7 +25,7 @@ export default function ParcelsList({ parcels }: { parcels: Parcel[] }) {
           <TableHead className="text-right">
             Volume (m<sup>3</sup>)
           </TableHead>
-          <TableHead className="text-right">Weight</TableHead>
+          <TableHead className="text-right">Weight (kg)</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
