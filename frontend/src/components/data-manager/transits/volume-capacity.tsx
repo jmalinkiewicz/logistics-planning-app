@@ -1,5 +1,5 @@
 import { Progress } from "@/components/ui/progress";
-import { Box, Package, Weight } from "lucide-react";
+import { Package } from "lucide-react";
 
 type WeightCapacityProps = {
   volume: number;

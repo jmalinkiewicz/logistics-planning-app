@@ -2,17 +2,23 @@ import { Separator } from "@/components/ui/separator";
 import { Ruler } from "lucide-react";
 
 type DimensionsProps = {
+  name: string;
   height: number;
   width: number;
   depth: number;
 };
 
-export default function Dimensions({ height, width, depth }: DimensionsProps) {
+export default function Dimensions({
+  name,
+  height,
+  width,
+  depth,
+}: DimensionsProps) {
   return (
     <>
       <div className="flex items-center gap-2 mb-4">
         <Ruler className="h-5 w-5 text-primary" />
-        <h2 className="text-xl font-semibold">Container Dimensions</h2>
+        <h2 className="text-xl font-semibold">{name} Dimensions</h2>
       </div>
       <div className="grid grid-cols-3 gap-6">
         <div className="space-y-2">

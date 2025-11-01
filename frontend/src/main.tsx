@@ -7,6 +7,9 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import TransitsLayout from "./components/data-manager/transits/transits-layout.tsx";
 import Transits from "./components/data-manager/transits/transits.tsx";
 import Transit from "./components/data-manager/transits/transit.tsx";
+import ParcelsLayout from "./components/data-manager/parcels/parcels-layout.tsx";
+import Parcels from "./components/data-manager/parcels/parcels.tsx";
+import Parcel from "./components/data-manager/parcels/parcel.tsx";
 
 const router = createBrowserRouter([
   {
@@ -28,12 +31,12 @@ const router = createBrowserRouter([
       },
       {
         path: "parcels",
-        element: <div>Parcels Layout</div>,
+        element: <ParcelsLayout />,
         children: [
-          { index: true, element: <div>Parcels List</div> },
+          { index: true, element: <Parcels /> },
           {
             path: ":id",
-            element: <div>Parcel Details</div>,
+            element: <Parcel />,
           },
         ],
       },

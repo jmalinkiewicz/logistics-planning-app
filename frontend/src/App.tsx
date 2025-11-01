@@ -1,6 +1,5 @@
 import { Link, Outlet, useLocation } from "react-router";
 import "./App.css";
-import { useData } from "./providers/data-provider";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { getDefaultTab } from "./lib/utils";
 

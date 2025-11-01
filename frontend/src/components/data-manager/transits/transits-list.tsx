@@ -32,6 +32,7 @@ export default function TransitsList({ transits }: { transits: Transit[] }) {
       <TableBody>
         {transits.map((transit) => (
           <TableRow
+            className="capitalize"
             onClick={() => navigate(`/transits/${transit.id}`)}
             key={transit.id}
           >
@@ -40,7 +41,7 @@ export default function TransitsList({ transits }: { transits: Transit[] }) {
             <TableCell>{transit.startLocation.city}</TableCell>
             <TableCell>{transit.endLocation.city}</TableCell>
             <TableCell className="text-right">
-              {transit.currentVolumeM3}
+              {transit.currentVolumeM3.toFixed(2)}
             </TableCell>
             <TableCell className="text-right">
               {formatDate(transit.departureDate)}

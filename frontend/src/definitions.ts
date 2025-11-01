@@ -1,5 +1,9 @@
 type TransitStatus = "scheduled" | "in_progress" | "completed";
-type ParcelStatus = "scheduled" | "unassigned" | "in_progress" | "completed";
+export type ParcelStatus =
+  | "scheduled"
+  | "unassigned"
+  | "in_progress"
+  | "completed";
 
 export type Location = {
   id: number;

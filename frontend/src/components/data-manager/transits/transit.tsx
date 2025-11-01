@@ -62,6 +62,7 @@ export default function Transit() {
       </div>
       <div className="mt-8">
         <Dimensions
+          name="Container"
           height={transit.heightM}
           width={transit.widthM}
           depth={transit.depthM}
