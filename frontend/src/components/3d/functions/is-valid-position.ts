@@ -1,9 +1,9 @@
-import type { Box, BoxInput, Container } from "@/definitions";
+import type { Box, Container } from "@/definitions";
 import { boxesCollide } from "./boxes-collide";
 import { boxesOverlap2D } from "./boxes-overlap-2d";
 
 export function isValidPosition(
-  box: BoxInput,
+  box: { width: number; height: number; depth: number },
   x: number,
   y: number,
   z: number,

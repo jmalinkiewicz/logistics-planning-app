@@ -1,5 +1,5 @@
 import type { Box, BoxInput, Container } from "@/definitions";
-import { findBestPosition } from "./find-best-position";
+import { findBestPositionWithRotation } from "./find-best-position-with-rotation";
 
 export function calculateBoxPositions(
   inputBoxes: BoxInput[],
@@ -7,6 +7,7 @@ export function calculateBoxPositions(
 ): Box[] {
   const placedBoxes: Box[] = [];
 
+  // Sort boxes by volume (largest first) for better packing
   const sortedBoxes = [...inputBoxes].sort((a, b) => {
     const volA = a.width * a.height * a.depth;
     const volB = b.width * b.height * b.depth;
@@ -14,14 +15,17 @@ export function calculateBoxPositions(
   });
 
   for (const box of sortedBoxes) {
-    const position = findBestPosition(box, placedBoxes, container);
+    const result = findBestPositionWithRotation(box, placedBoxes, container);
 
-    if (position) {
+    if (result) {
       placedBoxes.push({
         ...box,
-        x: position.x,
-        y: position.y,
-        z: position.z,
+        width: result.width,
+        height: result.height,
+        depth: result.depth,
+        x: result.x,
+        y: result.y,
+        z: result.z,
       });
     }
   }
