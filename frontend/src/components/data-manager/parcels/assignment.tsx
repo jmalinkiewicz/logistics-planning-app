@@ -1,4 +1,3 @@
-import type { ParcelStatus } from "@/definitions";
 import { Truck } from "lucide-react";
 
 export default function Assignment({

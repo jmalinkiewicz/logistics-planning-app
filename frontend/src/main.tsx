@@ -10,6 +10,9 @@ import Transit from "./components/data-manager/transits/transit.tsx";
 import ParcelsLayout from "./components/data-manager/parcels/parcels-layout.tsx";
 import Parcels from "./components/data-manager/parcels/parcels.tsx";
 import Parcel from "./components/data-manager/parcels/parcel.tsx";
+import LocationsLayout from "./components/data-manager/locations/locations-layout.tsx";
+import Locations from "./components/data-manager/locations/locations.tsx";
+import Location from "./components/data-manager/locations/location.tsx";
 
 const router = createBrowserRouter([
   {
@@ -42,12 +45,12 @@ const router = createBrowserRouter([
       },
       {
         path: "locations",
-        element: <div>Locations Layout</div>,
+        element: <LocationsLayout />,
         children: [
-          { index: true, element: <div>Locations List</div> },
+          { index: true, element: <Locations /> },
           {
             path: ":id",
-            element: <div>Location Details</div>,
+            element: <Location />,
           },
         ],
       },
