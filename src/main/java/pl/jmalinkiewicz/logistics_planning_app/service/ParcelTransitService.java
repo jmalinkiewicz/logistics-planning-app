@@ -2,11 +2,17 @@ package pl.jmalinkiewicz.logistics_planning_app.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.jmalinkiewicz.logistics_planning_app.dto.TransitRequestDTO;
+import pl.jmalinkiewicz.logistics_planning_app.dto.TransitResponseDTO;
+import pl.jmalinkiewicz.logistics_planning_app.mapper.TransitMapper;
+import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
 import pl.jmalinkiewicz.logistics_planning_app.model.ParcelStatus;
 import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
+import pl.jmalinkiewicz.logistics_planning_app.repository.LocationRepository;
 import pl.jmalinkiewicz.logistics_planning_app.repository.ParcelRepository;
 import pl.jmalinkiewicz.logistics_planning_app.repository.TransitRepository;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +26,8 @@ public class ParcelTransitService {
     private final ParcelService parcelService;
     private final ParcelRepository parcelRepository;
     private final TransitRepository transitRepository;
+    private final TransitMapper transitMapper;
+    private final LocationRepository locationRepository;
 
     public Parcel createAndAssignParcel(final Parcel parcel) {
         List<Transit> transits = transitService.findTransitsForRoute(parcel.getStartLocation(), parcel.getEndLocation());
@@ -39,35 +47,48 @@ public class ParcelTransitService {
         return parcelRepository.save(parcel);
     }
 
-    public Transit createTransitAndAssignParcels(Transit newTransit) {
-        final Transit savedTransit = transitRepository.save(newTransit);
+    public TransitResponseDTO createTransitAndAssignParcels(TransitRequestDTO newTransit) {
 
+        System.out.println(newTransit);
+
+        final Transit transit = transitMapper.toEntity(newTransit);
+
+        System.out.println(transit);
+
+        Location start = (Location) locationRepository.findById((long) newTransit.getStartLocationId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid startLocationId"));
+        Location end = (Location) locationRepository.findById((long) newTransit.getEndLocationId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid endLocationId"));
+
+        transit.setStartLocation(start);
+        transit.setEndLocation(end);
+        
         List<Parcel> unassignedParcels = parcelService.findUnassignedParcelsForRoute(
-                savedTransit.getStartLocation(),
-                savedTransit.getEndLocation()
+                transit.getStartLocation(),
+                transit.getEndLocation()
         );
 
         List<Parcel> assignedParcels = new ArrayList<>();
 
         for (Parcel parcel : unassignedParcels) {
 
-            if (simulationService.checkIfParcelFits(parcel, assignedParcels, savedTransit)) {
+            if (simulationService.checkIfParcelFits(parcel, assignedParcels, transit)) {
 
-                parcel.setTransit(savedTransit);
+                parcel.setTransit(transit);
                 parcel.setStatus(ParcelStatus.scheduled);
                 assignedParcels.add(parcel);
                 parcelRepository.save(parcel);
 
 
-                savedTransit.setCurrentLoadKg(
-                        savedTransit.getCurrentLoadKg() + parcel.getWeightKg()
+                transit.setCurrentLoadKg(
+                        transit.getCurrentLoadKg() + parcel.getWeightKg()
                 );
-                savedTransit.setCurrentVolumeM3(
-                        savedTransit.getCurrentVolumeM3() + parcel.getVolumeM3()
+                transit.setCurrentVolumeM3(
+                        transit.getCurrentVolumeM3() + parcel.getVolumeM3()
                 );
 
             }
         }
-        return transitRepository.save(savedTransit);
+        return transitMapper.toDto(transitRepository.save(transit));
     }
 }

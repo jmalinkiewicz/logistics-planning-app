@@ -3,8 +3,8 @@ package pl.jmalinkiewicz.logistics_planning_app.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.jmalinkiewicz.logistics_planning_app.dto.TransitDTO;
-import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
+import pl.jmalinkiewicz.logistics_planning_app.dto.TransitRequestDTO;
+import pl.jmalinkiewicz.logistics_planning_app.dto.TransitResponseDTO;
 import pl.jmalinkiewicz.logistics_planning_app.service.ParcelTransitService;
 import pl.jmalinkiewicz.logistics_planning_app.service.TransitService;
 
@@ -19,14 +19,14 @@ public class TransitController {
     private final ParcelTransitService parcelTransitService;
 
     @PostMapping
-    public ResponseEntity<Transit> createTransit(@RequestBody Transit transit) {
-        Transit saved = parcelTransitService.createTransitAndAssignParcels(transit);
+    public ResponseEntity<TransitResponseDTO> createTransit(@RequestBody TransitRequestDTO transit) {
+        TransitResponseDTO saved = parcelTransitService.createTransitAndAssignParcels(transit);
         return ResponseEntity.ok(saved);
     }
 
     @GetMapping
-    public ResponseEntity<List<TransitDTO>> getAllTransits() {
-        List<TransitDTO> transits = transitService.getAllTransitsDto();
+    public ResponseEntity<List<TransitResponseDTO>> getAllTransits() {
+        List<TransitResponseDTO> transits = transitService.getAllTransitsDto();
         return ResponseEntity.ok(transits);
     }
 }

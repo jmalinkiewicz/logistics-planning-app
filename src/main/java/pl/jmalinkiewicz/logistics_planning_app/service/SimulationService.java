@@ -3,8 +3,6 @@ package pl.jmalinkiewicz.logistics_planning_app.service;
 import com.github.skjolber.packing.api.*;
 import com.github.skjolber.packing.packer.plain.PlainPackager;
 import org.springframework.stereotype.Service;
-import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelDTO;
-import pl.jmalinkiewicz.logistics_planning_app.dto.TransitDTO;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
 import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
 
