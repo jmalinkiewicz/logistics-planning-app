@@ -12,7 +12,7 @@ function App() {
       <div className="flex w-full h-screen">
         {/* DATA MANAGER WINDOW */}
 
-        <div className="w-1/2 p-16 border-r-2">
+        <div className="w-1/2 p-16 border-r-2  overflow-scroll">
           <Tabs className="mb-6" value={getDefaultTab(location.pathname)}>
             <TabsList>
               <Link to="/">

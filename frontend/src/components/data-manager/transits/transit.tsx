@@ -7,6 +7,8 @@ import WeightCapacity from "./weight-capacity";
 import VolumeCapacity from "./volume-capacity";
 import Dimensions from "../shared/dimensions";
 import { formatDate } from "@/lib/utils";
+import ParcelsList from "../parcels/parcels-list";
+import { Package } from "lucide-react";
 
 export default function Transit() {
   const { id } = useParams();
@@ -15,6 +17,10 @@ export default function Transit() {
   const transit = data.transits.filter(
     (transit) => transit.id === Number(id)
   )[0];
+
+  const parcels = data.parcels.filter(
+    (parcel) => (parcel.transitId = transit.id)
+  );
 
   if (!transit) {
     return <div>Loading transit...</div>;
@@ -67,6 +73,13 @@ export default function Transit() {
           width={transit.widthM}
           depth={transit.depthM}
         />
+      </div>
+      <div className="mt-8">
+        <div className="flex items-center gap-2 mb-3">
+          <Package className="h-5 w-5" />
+          <h2 className="text-xl font-semibold">Parcels</h2>
+        </div>
+        <ParcelsList parcels={parcels} />
       </div>
     </div>
   );
