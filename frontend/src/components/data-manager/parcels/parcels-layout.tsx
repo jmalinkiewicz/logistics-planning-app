@@ -1,9 +1,10 @@
 import DataManagerLayout from "../shared/data-manager-layout";
+import CreateParcelDialog from "./create-parcel-dialog";
 
 export default function ParcelsLayout() {
   return (
     <>
-      <DataManagerLayout label="New Parcel" />
+      <DataManagerLayout dialog={<CreateParcelDialog />} label="New Parcel" />
     </>
   );
 }

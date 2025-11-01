@@ -62,3 +62,11 @@ function hslToHex(h: number, s: number, l: number) {
 
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
+
+export const useDismissModal = () => {
+  const dismiss = () =>
+    (document.querySelector('[data-state="open"]') as HTMLDivElement).click();
+  return {
+    dismiss,
+  };
+};

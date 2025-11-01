@@ -2,9 +2,9 @@ package pl.jmalinkiewicz.logistics_planning_app.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelRequestDTO;
 import pl.jmalinkiewicz.logistics_planning_app.dto.TransitRequestDTO;
-import pl.jmalinkiewicz.logistics_planning_app.dto.TransitResponseDTO;
 import pl.jmalinkiewicz.logistics_planning_app.mapper.ParcelMapper;
 import pl.jmalinkiewicz.logistics_planning_app.mapper.TransitMapper;
 import pl.jmalinkiewicz.logistics_planning_app.model.Location;
@@ -31,6 +31,7 @@ public class ParcelTransitService {
     private final TransitMapper transitMapper;
     private final ParcelMapper parcelMapper;
     private final LocationRepository locationRepository;
+    private final TransactionTemplate transactionTemplate;
 
     public Parcel createAndAssignParcel(final ParcelRequestDTO newParcel) {
 
@@ -57,11 +58,9 @@ public class ParcelTransitService {
 
     public Transit createTransitAndAssignParcels(TransitRequestDTO newTransit) {
 
-        System.out.println(newTransit);
-
         final Transit transit = transitMapper.toEntity(newTransit);
 
-        System.out.println(transit);
+        transitRepository.save(transit);
 
         Location start = (Location) locationRepository.findById((long) newTransit.getStartLocationId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid startLocationId"));

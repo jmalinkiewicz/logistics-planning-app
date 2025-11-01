@@ -3,8 +3,15 @@ import BackButton from "./back-button";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw, Trash2 } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-export default function DataManagerLayout({ label }: { label: string }) {
+export default function DataManagerLayout({
+  label,
+  dialog,
+}: {
+  label: string;
+  dialog: React.JSX.Element;
+}) {
   const location = useLocation();
 
   const isDetailsView = /^\/(transits|parcels|locations)\/[^/]+/.test(
@@ -25,7 +32,12 @@ export default function DataManagerLayout({ label }: { label: string }) {
               <RefreshCcw />
             </Button>
           )}
-          <Button variant={"outline"}>{label}</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant={"outline"}>{label}</Button>
+            </DialogTrigger>
+            {dialog}
+          </Dialog>
         </ButtonGroup>
       </div>
       <Outlet />

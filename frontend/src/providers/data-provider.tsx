@@ -8,12 +8,14 @@ export type DataContextType = {
   parcels: Parcel[];
   transits: Transit[];
   locations: Location[];
+  revalidate: (routes: string[]) => Promise<void>; // <-- added
 };
 
 const defaultState = {
   parcels: [],
   transits: [],
   locations: [],
+  revalidate: async () => {},
 };
 
 const DataContext = createContext<DataContextType>(defaultState);
@@ -27,23 +29,35 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const [transits, setTransits] = useState<Transit[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
 
-  useEffect(() => {
-    async function loadData() {
-      const [loadedTransits, loadedParcels, loadedLocations] =
-        await Promise.all([getTransits(), getParcels(), getLocations()]);
+  // Helper to fetch specific datasets
+  const revalidate = async (routes: string[]) => {
+    const promises: Promise<void>[] = [];
 
-      setTransits(loadedTransits);
-      setParcels(loadedParcels);
-      setLocations(loadedLocations);
+    if (routes.includes("/transits")) {
+      promises.push(getTransits().then((data) => setTransits(data)));
     }
 
-    loadData();
+    if (routes.includes("/parcels")) {
+      promises.push(getParcels().then((data) => setParcels(data)));
+    }
+
+    if (routes.includes("/locations")) {
+      promises.push(getLocations().then((data) => setLocations(data)));
+    }
+
+    await Promise.all(promises);
+  };
+
+  useEffect(() => {
+    // Load all data initially
+    revalidate(["/transits", "/parcels", "/locations"]);
   }, []);
 
   const value = {
     parcels,
     transits,
     locations,
+    revalidate,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

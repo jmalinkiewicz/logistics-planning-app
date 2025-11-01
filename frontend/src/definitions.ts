@@ -74,3 +74,23 @@ export interface Container {
   minZ: number;
   maxZ: number;
 }
+
+export type ParcelRequest = {
+  startLocationId: number;
+  endLocationId: number;
+  weightKg: number;
+  widthM: number;
+  heightM: number;
+  depthM: number;
+};
+
+export type TransitRequest = {
+  startLocationId: number;
+  endLocationId: number;
+  widthM: number;
+  heightM: number;
+  depthM: number;
+  maxLoadKg: number;
+  departureDate: string | Date;
+  arrivalDate: string | Date;
+};
