@@ -2,8 +2,10 @@ package pl.jmalinkiewicz.logistics_planning_app.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelRequestDTO;
 import pl.jmalinkiewicz.logistics_planning_app.dto.TransitRequestDTO;
 import pl.jmalinkiewicz.logistics_planning_app.dto.TransitResponseDTO;
+import pl.jmalinkiewicz.logistics_planning_app.mapper.ParcelMapper;
 import pl.jmalinkiewicz.logistics_planning_app.mapper.TransitMapper;
 import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
@@ -27,18 +29,24 @@ public class ParcelTransitService {
     private final ParcelRepository parcelRepository;
     private final TransitRepository transitRepository;
     private final TransitMapper transitMapper;
+    private final ParcelMapper parcelMapper;
     private final LocationRepository locationRepository;
 
-    public Parcel createAndAssignParcel(final Parcel parcel) {
+    public Parcel createAndAssignParcel(final ParcelRequestDTO newParcel) {
+
+        Parcel parcel = parcelMapper.toEntity(newParcel);
+
         List<Transit> transits = transitService.findTransitsForRoute(parcel.getStartLocation(), parcel.getEndLocation());
 
         for (Transit transit : transits) {
             List<Parcel> parcels = transit.getParcels();
+            System.out.println("Parcels count: " + parcels.size());
 
             if (simulationService.checkIfParcelFits(parcel, parcels, transit)) {
                 transit.setCurrentLoadKg(transit.getCurrentLoadKg() + parcel.getWeightKg());
                 transit.setCurrentVolumeM3(transit.getCurrentVolumeM3() + parcel.getVolumeM3());
                 parcel.setStatus(ParcelStatus.scheduled);
+                parcel.setTransit(transit);
 
                 break;
             }
@@ -47,7 +55,7 @@ public class ParcelTransitService {
         return parcelRepository.save(parcel);
     }
 
-    public TransitResponseDTO createTransitAndAssignParcels(TransitRequestDTO newTransit) {
+    public Transit createTransitAndAssignParcels(TransitRequestDTO newTransit) {
 
         System.out.println(newTransit);
 
@@ -89,6 +97,6 @@ public class ParcelTransitService {
 
             }
         }
-        return transitMapper.toDto(transitRepository.save(transit));
+        return transitRepository.save(transit);
     }
 }

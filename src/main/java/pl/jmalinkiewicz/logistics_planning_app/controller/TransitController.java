@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.jmalinkiewicz.logistics_planning_app.dto.TransitRequestDTO;
 import pl.jmalinkiewicz.logistics_planning_app.dto.TransitResponseDTO;
+import pl.jmalinkiewicz.logistics_planning_app.mapper.TransitMapper;
+import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
 import pl.jmalinkiewicz.logistics_planning_app.service.ParcelTransitService;
 import pl.jmalinkiewicz.logistics_planning_app.service.TransitService;
 
@@ -17,11 +19,12 @@ public class TransitController {
 
     private final TransitService transitService;
     private final ParcelTransitService parcelTransitService;
+    private final TransitMapper transitMapper;
 
     @PostMapping
     public ResponseEntity<TransitResponseDTO> createTransit(@RequestBody TransitRequestDTO transit) {
-        TransitResponseDTO saved = parcelTransitService.createTransitAndAssignParcels(transit);
-        return ResponseEntity.ok(saved);
+        Transit saved = parcelTransitService.createTransitAndAssignParcels(transit);
+        return ResponseEntity.ok(transitMapper.toDto(saved));
     }
 
     @GetMapping

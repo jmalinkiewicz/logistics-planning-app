@@ -18,7 +18,11 @@ public class TransitResponseDTO {
     private Double heightM;
     private Double depthM;
     private Double maxVolumeM3;
+    private Double currentLoadKg;
+    private Double currentVolumeM3;
     private LocalDateTime departureDate;
     private LocalDateTime arrivalDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private String status;
 }

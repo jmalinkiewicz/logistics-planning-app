@@ -2,7 +2,7 @@ package pl.jmalinkiewicz.logistics_planning_app.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelDTO;
+import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelResponseDTO;
 import pl.jmalinkiewicz.logistics_planning_app.mapper.ParcelMapper;
 import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
@@ -24,7 +24,7 @@ public class ParcelService {
         );
     }
 
-    public List<ParcelDTO> findUnassignedParcelsForRouteDto(final Location start, final Location end) {
+    public List<ParcelResponseDTO> findUnassignedParcelsForRouteDto(final Location start, final Location end) {
         return parcelRepository.findByStatusAndStartLocationAndEndLocationOrderByCreatedAtAsc(
                 ParcelStatus.unassigned, start, end
         )
@@ -37,7 +37,7 @@ public class ParcelService {
         return parcelRepository.findAll();
     }
 
-    public List<ParcelDTO> getAllParcelsDto() {
+    public List<ParcelResponseDTO> getAllParcelsDto() {
         return parcelRepository.findAll()
                 .stream()
                 .map(parcelMapper::toDto)

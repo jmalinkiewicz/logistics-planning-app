@@ -3,6 +3,8 @@ package pl.jmalinkiewicz.logistics_planning_app.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -64,12 +66,14 @@ public class Transit {
     @Column(name = "status", columnDefinition = "transit_status")
     private TransitStatus status = TransitStatus.scheduled;
 
+    @CreationTimestamp
     @NonNull
-    @Column(name = "created_at")
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @UpdateTimestamp
     @NonNull
-    @Column(name = "updated_at")
+    @Column(nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "transit")

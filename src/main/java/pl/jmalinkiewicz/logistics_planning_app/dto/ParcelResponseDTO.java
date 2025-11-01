@@ -1,9 +1,8 @@
 package pl.jmalinkiewicz.logistics_planning_app.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.model.ParcelStatus;
 
 import java.time.LocalDateTime;
@@ -11,9 +10,9 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ParcelDTO {
+public class ParcelResponseDTO {
 
-    private Long id;
+    private int id;
 
     private LocationDTO startLocation;
     private LocationDTO endLocation;
@@ -28,7 +27,7 @@ public class ParcelDTO {
 
     private ParcelStatus status;
 
-    private Long transitId; // only expose transit ID, not full entity
+    private int transitId;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

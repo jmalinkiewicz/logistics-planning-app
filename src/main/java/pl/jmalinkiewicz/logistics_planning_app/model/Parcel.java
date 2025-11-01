@@ -3,6 +3,8 @@ package pl.jmalinkiewicz.logistics_planning_app.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -50,13 +52,15 @@ public class Parcel {
     @JoinColumn(name = "transit_id")
     private Transit transit;
 
+    @CreationTimestamp
     @NonNull
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @NonNull
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 
     public Parcel() {}
 
