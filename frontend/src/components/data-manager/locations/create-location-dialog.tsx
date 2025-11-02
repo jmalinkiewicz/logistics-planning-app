@@ -29,6 +29,8 @@ export default function CreateLocationDialog() {
     if (res.ok) {
       await revalidate(["/locations"]);
       dismiss();
+      setCity("");
+      setLoading(false);
     } else {
       setLoading(false);
     }

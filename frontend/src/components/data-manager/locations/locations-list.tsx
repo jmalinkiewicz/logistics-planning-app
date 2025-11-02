@@ -25,24 +25,31 @@ export default function LocationsList({
         transit.startLocation.id === id || transit.endLocation.id === id
     );
 
-  const getParcelsCount = (id: number) =>
+  const getUnassignedParcelsCount = (id: number) =>
     data.parcels.filter(
-      (parcel) => parcel.startLocation.id === id || parcel.endLocation.id === id
-    );
+      (parcel) =>
+        (parcel.startLocation.id === id || parcel.endLocation.id === id) &&
+        parcel.status === "unassigned"
+    ).length;
+
+  const getScheduledParcelsCount = (id: number) =>
+    data.parcels.filter(
+      (parcel) =>
+        (parcel.startLocation.id === id || parcel.endLocation.id === id) &&
+        parcel.status === "scheduled"
+    ).length;
 
   return (
     <Table className="w-full">
       <TableCaption>A list of all locations.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-auto pr-8">City</TableHead>
-          <TableHead className="w-auto text-right">Location ID</TableHead>
-          <TableHead className="w-auto text-right px-8">
-            Parcels Count
+          <TableHead className="w-auto">City</TableHead>
+          <TableHead className="w-auto text-right">Scheduled parcels</TableHead>
+          <TableHead className="w-auto text-right">
+            Unassigned parcels
           </TableHead>
-          <TableHead className="w-auto text-right px-8">
-            Transits Count
-          </TableHead>
+          <TableHead className="w-auto text-right">Transits Count</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -52,14 +59,14 @@ export default function LocationsList({
             onClick={() => navigate(`/locations/${location.id}`)}
             key={location.id}
           >
-            <TableCell className="w-auto pr-8">{location.city}</TableCell>
-            <TableCell className="font-medium w-auto text-right">
-              {location.id}
+            <TableCell className="w-auto">{location.city}</TableCell>
+            <TableCell className="w-auto text-right">
+              {getScheduledParcelsCount(location.id)}
             </TableCell>
-            <TableCell className="w-auto text-right px-8">
-              {getParcelsCount(location.id).length}
+            <TableCell className="w-auto text-right">
+              {getUnassignedParcelsCount(location.id)}
             </TableCell>
-            <TableCell className="w-auto text-right px-8">
+            <TableCell className="w-auto text-right">
               {getTransitsCount(location.id).length}
             </TableCell>
           </TableRow>

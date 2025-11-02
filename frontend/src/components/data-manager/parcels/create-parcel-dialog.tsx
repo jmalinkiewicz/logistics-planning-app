@@ -68,7 +68,14 @@ export default function CreateParcelDialog() {
     const res = await createParcel(parcelRequest);
 
     if (res.ok) {
-      await revalidate(["/parcels"]);
+      await revalidate(["/parcels", "/transits"]);
+      setOrigin(undefined);
+      setDestination(undefined);
+      setWeightKg("");
+      setWidthM("");
+      setHeightM("");
+      setDepthM("");
+      setLoading(false);
       dismiss();
     }
 

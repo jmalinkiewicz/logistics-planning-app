@@ -89,7 +89,16 @@ export default function CreateTransitDialog() {
     const res = await createTransit(transitRequest);
 
     if (res.ok) {
-      await revalidate(["/transits"]);
+      await revalidate(["/transits", "/parcels"]);
+      setOrigin(undefined);
+      setDestination(undefined);
+      setDepartureDate(undefined);
+      setArrivalDate(undefined);
+      setMaxLoadKg("");
+      setWidthM("");
+      setHeightM("");
+      setDepthM("");
+      setLoading(false);
       dismiss();
     }
 
