@@ -61,3 +61,26 @@ Any parcels that fit are assigned to this new transit.
 ### Deployment
 - Docker
 
+---
+
+## Run the project locally
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/jmalinkiewicz/logistics-planning-app
+```
+
+2. Navigate to project directory
+
+```bash
+cd logistics-planning-app/
+```
+
+3. Compose with docker
+
+```bash 
+docker compose up
+```
+
+4. Open the web client at http://localhost:5173
