@@ -1,8 +1,7 @@
-import type { BoxInput, Container, Parcel, Transit } from "@/definitions";
+import type { Box, BoxInput, Container, Parcel, Transit } from "@/definitions";
 import { randomHex } from "@/lib/utils";
 import { useData } from "@/providers/data-provider";
-import { useMemo } from "react";
-import { calculateBoxPositions } from "./functions/calculate-box-positions";
+import { useEffect, useMemo, useState } from "react";
 import {
   Environment,
   Grid,
@@ -24,7 +23,9 @@ export function Scene({
 
   const parcelsForTransit: Parcel[] = useMemo(() => {
     if (!isTransit) return [];
-    return data.parcels.filter((parcel) => parcel.transitId === item.id);
+    return data.parcels.filter(
+      (parcel) => Number(parcel.transitId) === Number(item.id)
+    );
   }, [isTransit, data.parcels, item.id]);
 
   const boxesInput: BoxInput[] = useMemo(() => {
@@ -52,9 +53,24 @@ export function Scene({
     };
   }, [isTransit, item]);
 
-  const calculatedBoxes = useMemo(() => {
-    if (!container || boxesInput.length === 0) return [];
-    return calculateBoxPositions(boxesInput, container);
+  const [calculatedBoxes, setCalculatedBoxes] = useState<Box[]>([]);
+
+  useEffect(() => {
+    if (!container || boxesInput.length === 0) return;
+
+    const worker = new Worker(
+      new URL("@/components/3d/functions/box-worker.ts", import.meta.url),
+      { type: "module" }
+    );
+
+    worker.postMessage({ boxesInput, container });
+
+    worker.onmessage = (e) => {
+      setCalculatedBoxes(e.data);
+      worker.terminate();
+    };
+
+    return () => worker.terminate();
   }, [boxesInput, container]);
 
   const parcelPosition: [number, number, number] = [0, item.heightM / 2, 0];

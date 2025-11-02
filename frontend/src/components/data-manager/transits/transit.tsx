@@ -19,7 +19,7 @@ export default function Transit() {
   )[0];
 
   const parcels = data.parcels.filter(
-    (parcel) => (parcel.transitId = transit.id)
+    (parcel) => parcel.transitId === transit.id
   );
 
   if (!transit) {
@@ -53,7 +53,7 @@ export default function Transit() {
       <div className="mt-8">
         <Schedule
           departureDate={transit.departureDate}
-          arrivalDate={transit.departureDate}
+          arrivalDate={transit.arrivalDate}
         />
       </div>
       <div className="mt-8 grid grid-cols-2 gap-4">
