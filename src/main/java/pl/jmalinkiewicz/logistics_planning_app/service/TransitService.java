@@ -18,15 +18,8 @@ public class TransitService {
     private final TransitRepository transitRepository;
     private final TransitMapper transitMapper;
 
-    public List<TransitResponseDTO> getAllTransitsDto() {
-        return transitRepository.findAll()
-                .stream()
-                .map(transitMapper::toDto)
-                .toList();
-    }
-
-    public List<Transit> getAllTransits() {
-        return transitRepository.findAll();
+    public List<TransitResponseDTO> getAllTransits() {
+        return transitMapper.toDtoList(transitRepository.findAll());
     }
 
     public List<Transit> findTransitsForRoute(final Location start, final Location end) {

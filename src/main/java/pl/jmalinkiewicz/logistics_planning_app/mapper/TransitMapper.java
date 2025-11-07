@@ -8,9 +8,13 @@ import pl.jmalinkiewicz.logistics_planning_app.dto.TransitResponseDTO;
 import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface TransitMapper {
     TransitResponseDTO toDto(Transit entity);
+
+    List<TransitResponseDTO> toDtoList(List<Transit> entities);
 
     @Mapping(target = "startLocation", source = "startLocationId", qualifiedByName = "mapIdToLocation")
     @Mapping(target = "endLocation", source = "endLocationId", qualifiedByName = "mapIdToLocation")

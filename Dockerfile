@@ -15,7 +15,7 @@ COPY src ./src
 RUN ./gradlew build -x test
 
 # ---- Runtime image ----
-FROM openjdk:21-jdk-slim
+FROM amazoncorretto:23-alpine-jdk
 
 WORKDIR /app
 COPY --from=builder /app/build/libs/*.jar app.jar
