@@ -2,26 +2,32 @@ package pl.jmalinkiewicz.logistics_planning_app.service;
 
 import com.github.skjolber.packing.api.*;
 import com.github.skjolber.packing.packer.plain.PlainPackager;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
 import pl.jmalinkiewicz.logistics_planning_app.model.Transit;
+import pl.jmalinkiewicz.logistics_planning_app.util.UnitConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SimulationService {
+
+    private final UnitConverter unitConverter;
+
     public final boolean checkIfParcelFits(Parcel parcel, List<Parcel> assignedParcels, Transit transit) {
         List<BoxItem> products = new ArrayList<>();
 
         products.add(
                 new BoxItem(Box.newBuilder()
                         .withSize(
-                                metersToMillimeters(parcel.getWidthM()),
-                                metersToMillimeters(parcel.getDepthM()),
-                                metersToMillimeters(parcel.getHeightM())
+                                unitConverter.metersToMillimeters(parcel.getWidthM()),
+                                unitConverter.metersToMillimeters(parcel.getDepthM()),
+                                unitConverter.metersToMillimeters(parcel.getHeightM())
                         )
-                        .withWeight(kilosToGrams(parcel.getWeightKg()))
+                        .withWeight(unitConverter.kilogramsToGrams(parcel.getWeightKg()))
                         .build()
                 )
         );
@@ -30,11 +36,11 @@ public class SimulationService {
             products.add(
                     new BoxItem(Box.newBuilder()
                             .withSize(
-                                    metersToMillimeters(assignedParcel.getWidthM()),
-                                    metersToMillimeters(assignedParcel.getDepthM()),
-                                    metersToMillimeters(assignedParcel.getHeightM())
+                                    unitConverter.metersToMillimeters(assignedParcel.getWidthM()),
+                                    unitConverter.metersToMillimeters(assignedParcel.getDepthM()),
+                                    unitConverter.metersToMillimeters(assignedParcel.getHeightM())
                             )
-                            .withWeight(kilosToGrams(assignedParcel.getWeightKg()))
+                            .withWeight(unitConverter.kilogramsToGrams(assignedParcel.getWeightKg()))
                             .build()
                     )
             );
@@ -42,11 +48,11 @@ public class SimulationService {
 
         Container container = Container.newBuilder()
                 .withSize(
-                        metersToMillimeters(transit.getWidthM()),
-                        metersToMillimeters(transit.getDepthM()),
-                        metersToMillimeters(transit.getHeightM())
+                        unitConverter.metersToMillimeters(transit.getWidthM()),
+                        unitConverter.metersToMillimeters(transit.getDepthM()),
+                        unitConverter.metersToMillimeters(transit.getHeightM())
                 )
-                .withMaxLoadWeight(kilosToGrams(transit.getMaxLoadKg()))
+                .withMaxLoadWeight(unitConverter.kilogramsToGrams(transit.getMaxLoadKg()))
                 .build();
 
         List<ContainerItem> containerItems = ContainerItem
@@ -65,15 +71,5 @@ public class SimulationService {
                 .build();
 
         return result.isSuccess();
-    }
-
-    private int metersToMillimeters(Double meters) {
-        if (meters == null) return 0;
-        return (int) Math.round(meters * 1000);
-    }
-
-    private int kilosToGrams(Double kilos) {
-        if (kilos == null) return 0;
-        return (int) Math.round(kilos * 1000);
     }
 }
