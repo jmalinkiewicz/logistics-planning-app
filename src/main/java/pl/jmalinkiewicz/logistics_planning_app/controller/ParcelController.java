@@ -27,7 +27,7 @@ public class ParcelController {
 
     @GetMapping
     public ResponseEntity<List<ParcelResponseDTO>> getAllParcels() {
-        List<ParcelResponseDTO> parcels = parcelService.getAllParcelsDto();
+        List<ParcelResponseDTO> parcels = parcelService.getAllParcels();
         return ResponseEntity.ok(parcels);
     }
 }

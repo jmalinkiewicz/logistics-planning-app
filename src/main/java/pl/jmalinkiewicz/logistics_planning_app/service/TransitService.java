@@ -22,7 +22,7 @@ public class TransitService {
         return transitMapper.toDtoList(transitRepository.findAll());
     }
 
-    public List<Transit> findTransitsForRoute(final Location start, final Location end) {
+    public List<Transit> findScheduledTransitsForRoute(final Location start, final Location end) {
         return transitRepository.findByStatusAndStartLocationAndEndLocationOrderByArrivalDateAsc(TransitStatus.scheduled, start, end);
     }
 }

@@ -24,10 +24,14 @@ repositories {
 	mavenCentral()
 }
 
+val mockitoAgent = configurations.create("mockitoAgent")
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.github.skjolber.3d-bin-container-packing:core:4.0.7")
+    testImplementation("org.mockito:mockito-core:5.5.0")
+    mockitoAgent("org.mockito:mockito-core:5.5.0") { isTransitive = false }
     implementation("org.mapstruct:mapstruct:1.6.3")
     implementation("com.google.guava:guava:33.5.0-jre")
 	compileOnly("org.projectlombok:lombok")

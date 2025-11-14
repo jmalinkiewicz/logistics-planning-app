@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface ParcelRepository extends JpaRepository<Parcel, Long> {
     List<Parcel> findByStatusAndStartLocationAndEndLocationOrderByCreatedAtAsc(ParcelStatus status, Location startLocation, Location endLocation);
+
+    List<Parcel> findByTransitId(int transitId);
 }

@@ -21,10 +21,7 @@ public class LocationService {
         return locationRepository.save(locationMapper.toEntity(location));
     }
 
-    public List<LocationDTO> getAllLocationsDto() {
-        return locationRepository.findAll()
-                .stream()
-                .map(locationMapper::toDto)
-                .toList();
+    public List<LocationDTO> getAllLocations() {
+        return locationMapper.toDtoList(locationRepository.findAll());
     }
 }

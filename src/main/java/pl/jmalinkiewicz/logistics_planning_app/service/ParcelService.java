@@ -24,28 +24,7 @@ public class ParcelService {
         );
     }
 
-    public List<ParcelResponseDTO> findUnassignedParcelsForRouteDto(final Location start, final Location end) {
-        return parcelRepository.findByStatusAndStartLocationAndEndLocationOrderByCreatedAtAsc(
-                ParcelStatus.unassigned, start, end
-        )
-                .stream()
-                .map(parcelMapper::toDto)
-                .toList();
+    public List<ParcelResponseDTO> getAllParcels() {
+        return parcelMapper.toDtoList(parcelRepository.findAll());
     }
-
-    public List<Parcel> getAllParcels() {
-        return parcelRepository.findAll();
-    }
-
-    public List<ParcelResponseDTO> getAllParcelsDto() {
-        return parcelRepository.findAll()
-                .stream()
-                .map(parcelMapper::toDto)
-                .toList();
-    }
-
-    public Parcel createParcel(final Parcel parcel) {
-        return parcelRepository.save(parcel);
-    }
-
 }

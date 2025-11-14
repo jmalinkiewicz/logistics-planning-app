@@ -8,8 +8,12 @@ import pl.jmalinkiewicz.logistics_planning_app.dto.ParcelResponseDTO;
 import pl.jmalinkiewicz.logistics_planning_app.model.Location;
 import pl.jmalinkiewicz.logistics_planning_app.model.Parcel;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ParcelMapper {
+    List<ParcelResponseDTO> toDtoList(List<Parcel> entities);
+
     @Mapping(target = "transitId", source = "transit.id")
     ParcelResponseDTO toDto(Parcel entity);
 

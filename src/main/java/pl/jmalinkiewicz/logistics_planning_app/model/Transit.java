@@ -76,9 +76,6 @@ public class Transit {
     @Column(nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "transit")
-    private List<Parcel> parcels = new ArrayList<>();
-
     public Transit() {}
 
     public Double getMaxVolumeM3() {

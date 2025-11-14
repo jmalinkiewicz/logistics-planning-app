@@ -40,10 +40,10 @@ public class ParcelTransitService {
 
         Parcel parcel = parcelMapper.toEntity(newParcel);
 
-        List<Transit> transits = transitService.findTransitsForRoute(parcel.getStartLocation(), parcel.getEndLocation());
+        List<Transit> transits = transitService.findScheduledTransitsForRoute(parcel.getStartLocation(), parcel.getEndLocation());
 
         for (Transit transit : transits) {
-            List<Parcel> parcels = transit.getParcels();
+            List<Parcel> parcels = parcelRepository.findByTransitId(transit.getId());
 
             if (simulationService.checkIfParcelFits(parcel, parcels, transit)) {
                 transit.setCurrentLoadKg(transit.getCurrentLoadKg() + parcel.getWeightKg());
