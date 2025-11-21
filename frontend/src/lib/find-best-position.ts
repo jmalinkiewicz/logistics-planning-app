@@ -1,12 +1,12 @@
-import type { Box, Container } from "@/definitions";
+import type { Box, BoxGeometry, BoxPosition, Container } from "@/definitions";
 import { isValidPosition } from "./is-valid-position";
 import { calculatePositionScore } from "./calculate-position-score";
 
 export function findBestPosition(
-  box: { width: number; height: number; depth: number },
+  box: BoxGeometry,
   placedBoxes: Box[],
   container: Container
-): { x: number; y: number; z: number } | null {
+): BoxPosition | null {
   const stepSize = 0.01; // Grid resolution for placement attempts
 
   // Try different heights (ground first, then stacked)

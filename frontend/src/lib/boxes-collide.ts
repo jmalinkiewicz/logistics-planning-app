@@ -1,21 +1,6 @@
-export function boxesCollide(
-  box1: {
-    x: number;
-    y: number;
-    z: number;
-    width: number;
-    height: number;
-    depth: number;
-  },
-  box2: {
-    x: number;
-    y: number;
-    z: number;
-    width: number;
-    height: number;
-    depth: number;
-  }
-): boolean {
+import type { BoxPrimitive } from "@/definitions";
+
+export function boxesCollide(box1: BoxPrimitive, box2: BoxPrimitive): boolean {
   const margin = 0.01; // Small margin to prevent floating point issues
 
   return (

@@ -1,4 +1,4 @@
-import type { Box, BoxInput, Container } from "@/definitions";
+import type { Box, BoxInput, BoxPrimitive, Container } from "@/definitions";
 import { findBestPosition } from "./find-best-position";
 import { getBoxOrientations } from "./get-box-orientations";
 
@@ -6,14 +6,7 @@ export function findBestPositionWithRotation(
   box: BoxInput,
   placedBoxes: Box[],
   container: Container
-): {
-  x: number;
-  y: number;
-  z: number;
-  width: number;
-  height: number;
-  depth: number;
-} | null {
+): BoxPrimitive | null {
   const orientations = getBoxOrientations(box);
 
   for (const orientation of orientations) {

@@ -1,6 +1,6 @@
-import type { BoxInput } from "@/definitions";
+import type { BoxGeometry } from "@/definitions";
 
-export function getBoxOrientations(box: BoxInput) {
+export function getBoxOrientations(box: BoxGeometry) {
   const { width, height, depth } = box;
 
   const perms = [

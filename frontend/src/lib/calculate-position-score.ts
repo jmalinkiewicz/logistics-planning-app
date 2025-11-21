@@ -1,8 +1,8 @@
-import type { Box, Container } from "@/definitions";
+import type { Box, BoxGeometry, Container } from "@/definitions";
 import { calculateBoundingBox } from "./calculate-bounding-box";
 
 export function calculatePositionScore(
-  box: { width: number; height: number; depth: number },
+  box: BoxGeometry,
   x: number,
   y: number,
   z: number,

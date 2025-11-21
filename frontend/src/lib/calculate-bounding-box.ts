@@ -1,14 +1,7 @@
-import type { Container } from "@/definitions";
+import type { BoxPrimitive, Container } from "@/definitions";
 
 export function calculateBoundingBox(
-  boxes: Array<{
-    x: number;
-    y: number;
-    z: number;
-    width: number;
-    height: number;
-    depth: number;
-  }>,
+  boxes: BoxPrimitive[],
   container: Container
 ): { volume: number } {
   if (boxes.length === 0) return { volume: 0 };

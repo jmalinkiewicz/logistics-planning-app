@@ -1,13 +1,13 @@
-import type { Box, Container } from "@/definitions";
+import type { Box, BoxGeometry, BoxPrimitive, Container } from "@/definitions";
 import { boxesCollide } from "./boxes-collide";
 import { boxesOverlap2D } from "./boxes-overlap-2d";
 
 export function isValidPosition(
-  box: { width: number; height: number; depth: number },
+  box: BoxGeometry,
   x: number,
   y: number,
   z: number,
-  placedBoxes: Box[],
+  placedBoxes: BoxPrimitive[],
   baseY: number,
   container: Container
 ): boolean {

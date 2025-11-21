@@ -44,24 +44,26 @@ export type Parcel = {
   updatedAt: string; // ISO date string
 };
 
-export interface Box {
-  id: string;
+export interface BoxGeometry {
   width: number;
   height: number;
   depth: number;
+}
+
+export interface BoxPosition {
   x: number;
   y: number;
   z: number;
+}
+
+export interface BoxPrimitive extends BoxGeometry, BoxPosition {}
+
+export interface Box extends BoxPrimitive {
+  id: string;
   color?: string;
 }
 
-export interface BoxInput {
-  id: string;
-  width: number;
-  height: number;
-  depth: number;
-  color?: string;
-}
+export type BoxInput = Omit<Box, "x" | "y" | "z">;
 
 export interface Container {
   width: number;
