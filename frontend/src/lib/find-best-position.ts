@@ -1,4 +1,10 @@
-import type { Box, BoxGeometry, BoxPosition, Container } from "@/definitions";
+import type {
+  Box,
+  BoxGeometry,
+  BoxPosition,
+  Container,
+  ScoredPosition,
+} from "@/definitions";
 import { isValidPosition } from "./is-valid-position";
 import { calculatePositionScore } from "./calculate-position-score";
 
@@ -12,8 +18,7 @@ export function findBestPosition(
   // Try different heights (ground first, then stacked)
   const heightsToTry: number[] = [0];
 
-  const candidates: Array<{ x: number; y: number; z: number; score: number }> =
-    [];
+  const candidates: Array<ScoredPosition> = [];
 
   // Add potential stacking heights based on existing boxes
   for (const placed of placedBoxes) {

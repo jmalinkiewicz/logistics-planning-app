@@ -56,6 +56,10 @@ export interface BoxPosition {
   z: number;
 }
 
+export interface ScoredPosition extends BoxPosition {
+  score: number;
+}
+
 export interface BoxPrimitive extends BoxGeometry, BoxPosition {}
 
 export interface Box extends BoxPrimitive {

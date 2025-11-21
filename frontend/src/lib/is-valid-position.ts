@@ -1,4 +1,4 @@
-import type { Box, BoxGeometry, BoxPrimitive, Container } from "@/definitions";
+import type { BoxGeometry, BoxPrimitive, Container } from "@/definitions";
 import { boxesCollide } from "./boxes-collide";
 import { boxesOverlap2D } from "./boxes-overlap-2d";
 
