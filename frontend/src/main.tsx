@@ -1,56 +1,112 @@
-import { StrictMode } from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { DataProvider } from "./providers/data-provider.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router";
-import TransitsLayout from "./components/data-manager/transits/transits-layout.tsx";
-import Transits from "./components/data-manager/transits/transits.tsx";
-import Transit from "./components/data-manager/transits/transit.tsx";
-import ParcelsLayout from "./components/data-manager/parcels/parcels-layout.tsx";
-import Parcels from "./components/data-manager/parcels/parcels.tsx";
-import Parcel from "./components/data-manager/parcels/parcel.tsx";
-import LocationsLayout from "./components/data-manager/locations/locations-layout.tsx";
-import Locations from "./components/data-manager/locations/locations.tsx";
-import Location from "./components/data-manager/locations/location.tsx";
+import { createBrowserRouter } from "react-router";
+import { RouterProvider } from "react-router/dom";
+
+import TransitsLayout from "@/components/data-manager/transits/transits-layout";
+import ParcelsLayout from "@/components/data-manager/parcels/parcels-layout";
+import LocationsLayout from "@/components/data-manager/locations/locations-layout";
+
+import Transits from "@/components/data-manager/transits/transits";
+import Transit from "@/components/data-manager/transits/transit";
+
+import Parcels from "@/components/data-manager/parcels/parcels";
+import Parcel from "@/components/data-manager/parcels/parcel";
+
+import Locations from "@/components/data-manager/locations/locations";
+import Location from "@/components/data-manager/locations/location";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-    // TODO: Layout 50/50: Data Manager Window / Three.js Visualization Window
+    element: (
+      <DataProvider>
+        <App />
+      </DataProvider>
+    ),
     children: [
       { index: true, element: <div>Project Welcome</div> },
+
       {
         path: "transits",
-        element: <TransitsLayout />,
+        element: (
+          <Suspense fallback={<div>Loading…</div>}>
+            <TransitsLayout />
+          </Suspense>
+        ),
         children: [
-          { index: true, element: <Transits /> },
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<div>Loading…</div>}>
+                <Transits />
+              </Suspense>
+            ),
+          },
           {
             path: ":id",
-            element: <Transit />,
+            element: (
+              <Suspense fallback={<div>Loading…</div>}>
+                <Transit />
+              </Suspense>
+            ),
           },
         ],
       },
+
       {
         path: "parcels",
-        element: <ParcelsLayout />,
+        element: (
+          <Suspense fallback={<div>Loading…</div>}>
+            <ParcelsLayout />
+          </Suspense>
+        ),
         children: [
-          { index: true, element: <Parcels /> },
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<div>Loading…</div>}>
+                <Parcels />
+              </Suspense>
+            ),
+          },
           {
             path: ":id",
-            element: <Parcel />,
+            element: (
+              <Suspense fallback={<div>Loading…</div>}>
+                <Parcel />
+              </Suspense>
+            ),
           },
         ],
       },
+
       {
         path: "locations",
-        element: <LocationsLayout />,
+        element: (
+          <Suspense fallback={<div>Loading…</div>}>
+            <LocationsLayout />
+          </Suspense>
+        ),
         children: [
-          { index: true, element: <Locations /> },
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<div>Loading…</div>}>
+                <Locations />
+              </Suspense>
+            ),
+          },
           {
             path: ":id",
-            element: <Location />,
+            element: (
+              <Suspense fallback={<div>Loading…</div>}>
+                <Location />
+              </Suspense>
+            ),
           },
         ],
       },
@@ -61,7 +117,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <DataProvider>
-      <RouterProvider router={router} />,
+      <RouterProvider router={router} />
     </DataProvider>
   </StrictMode>
 );

@@ -26,7 +26,7 @@ describe("findBestPosition", () => {
     vi.mocked(isValidPosition).mockReturnValue(true);
     vi.mocked(calculatePositionScore).mockReturnValue(5);
 
-    const pos = findBestPosition(box, [], container);
+    const pos = findBestPosition(box, [], container, 1);
 
     expect(pos).not.toBeNull();
     expect(pos?.y).toBe(box.height / 2);
@@ -35,7 +35,7 @@ describe("findBestPosition", () => {
   it("returns null when no valid position exists", () => {
     vi.mocked(isValidPosition).mockReturnValue(false);
 
-    const pos = findBestPosition(box, [], container);
+    const pos = findBestPosition(box, [], container, 1);
     expect(pos).toBeNull();
   });
 
@@ -47,7 +47,7 @@ describe("findBestPosition", () => {
     scoreMock.mockReturnValueOnce(1);
     scoreMock.mockReturnValue(50);
 
-    const pos = findBestPosition(box, [], container);
+    const pos = findBestPosition(box, [], container, 1);
 
     expect(pos).not.toBeNull();
   });
@@ -68,7 +68,7 @@ describe("findBestPosition", () => {
       { id: "a", x: 5, y: 1, z: 5, width: 2, height: 2, depth: 2 },
     ];
 
-    const pos = findBestPosition(box, placed, container);
+    const pos = findBestPosition(box, placed, container, 1);
 
     expect(pos).not.toBeNull();
     expect(pos!.y).toBeCloseTo(3);

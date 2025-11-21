@@ -49,7 +49,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   };
 
   useEffect(() => {
-    // Load all data initially
     revalidate(["/transits", "/parcels", "/locations"]);
   }, []);
 

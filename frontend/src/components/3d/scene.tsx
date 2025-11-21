@@ -58,10 +58,9 @@ export function Scene({
   useEffect(() => {
     if (!container || boxesInput.length === 0) return;
 
-    const worker = new Worker(
-      new URL("@/components/3d/functions/box-worker.ts", import.meta.url),
-      { type: "module" }
-    );
+    const worker = new Worker(new URL("@/lib/box-worker.ts", import.meta.url), {
+      type: "module",
+    });
 
     worker.postMessage({ boxesInput, container });
 

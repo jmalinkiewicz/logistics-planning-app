@@ -11,10 +11,9 @@ import { calculatePositionScore } from "./calculate-position-score";
 export function findBestPosition(
   box: BoxGeometry,
   placedBoxes: Box[],
-  container: Container
+  container: Container,
+  stepSize = 0.01
 ): BoxPosition | null {
-  const stepSize = 0.01; // Grid resolution for placement attempts
-
   // Try different heights (ground first, then stacked)
   const heightsToTry: number[] = [0];
 

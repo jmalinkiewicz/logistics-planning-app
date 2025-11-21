@@ -2,61 +2,54 @@ import { Link, Outlet, useLocation } from "react-router";
 import "./App.css";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { getDefaultTab } from "./lib/utils";
-import { Container3DView } from "./components/3d/three";
+import Control from "./components/ui/control";
+import { lazy } from "react";
+
+const Container3DView = lazy(() => import("./components/3d/three"));
 
 function App() {
   const location = useLocation();
 
   return (
     <>
-      <div className="flex w-full h-screen">
+      <div className="grid grid-cols-2 w-full h-screen">
         {/* DATA MANAGER WINDOW */}
 
-        <div className="w-1/2 p-16 border-r-2  overflow-scroll">
-          <Tabs className="mb-6" value={getDefaultTab(location.pathname)}>
-            <TabsList>
-              <Link to="/">
-                <TabsTrigger value="about">About</TabsTrigger>
-              </Link>
-              <Link to="/transits">
-                <TabsTrigger value="transits">Transits</TabsTrigger>
-              </Link>
-              <Link to="/parcels">
-                <TabsTrigger value="parcels">Parcels</TabsTrigger>
-              </Link>
-              <Link to="/locations">
-                <TabsTrigger value="locations">Locations</TabsTrigger>
-              </Link>
-            </TabsList>
-          </Tabs>
-          <Outlet />
+        <div className="p-16 border-r-2 overflow-auto">
+          <main>
+            <Tabs className="mb-6" value={getDefaultTab(location.pathname)}>
+              <nav>
+                <TabsList>
+                  <TabsTrigger value="about" asChild>
+                    <Link to="/">About</Link>
+                  </TabsTrigger>
+
+                  <TabsTrigger value="transits" asChild>
+                    <Link to="/transits">Transits</Link>
+                  </TabsTrigger>
+
+                  <TabsTrigger value="parcels" asChild>
+                    <Link to="/parcels">Parcels</Link>
+                  </TabsTrigger>
+
+                  <TabsTrigger value="locations" asChild>
+                    <Link to="/locations">Locations</Link>
+                  </TabsTrigger>
+                </TabsList>
+              </nav>
+            </Tabs>
+            <Outlet />
+          </main>
         </div>
 
         {/* THREE.JS VISUALIZATION WINDOW */}
 
-        <div className="w-1/2 h-screen flex flex-col overflow-hidden">
+        <div className="h-screen flex flex-col overflow-hidden">
           <Container3DView />
           <div className="h-10 px-4 text-xs bg-linear-to-r from-muted/50 to-muted/30 backdrop-blur-sm flex items-center justify-center border-t border-border/50 gap-4">
-            <div className="flex items-center gap-2">
-              <kbd className="px-2 py-0.5 text-[10px] font-semibold bg-background/80 border border-border rounded shadow-sm">
-                Left Click
-              </kbd>
-              <span className="text-muted-foreground">Rotate</span>
-            </div>
-            <div className="h-4 w-px bg-border/50" />
-            <div className="flex items-center gap-2">
-              <kbd className="px-2 py-0.5 text-[10px] font-semibold bg-background/80 border border-border rounded shadow-sm">
-                Right Click
-              </kbd>
-              <span className="text-muted-foreground">Pan</span>
-            </div>
-            <div className="h-4 w-px bg-border/50" />
-            <div className="flex items-center gap-2">
-              <kbd className="px-2 py-0.5 text-[10px] font-semibold bg-background/80 border border-border rounded shadow-sm">
-                Scroll
-              </kbd>
-              <span className="text-muted-foreground">Zoom</span>
-            </div>
+            <Control keyName="Left Click" label="Rotate" />
+            <Control keyName="Right Click" label="Pan" />
+            <Control keyName="Scroll" label="Zoom" />
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { useData } from "@/providers/data-provider";
 import MockScene from "./mock-scene";
 import { Scene } from "./scene";
 
-export function Container3DView() {
+export default function Container3DView() {
   const data = useData();
   const location = useLocation();
   const { id } = useParams();
